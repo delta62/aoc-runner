@@ -39,7 +39,7 @@
       (throw (Exception. "Couldn't download input. Is your session token in .aoc-session valid?")))))
 
 (defn- input-path [day]
-  (io/resource (format "input/day%02d.txt" day)))
+  (format "resources/input/day%02d.txt" day))
 
 (defn- write-input [day input]
   (spit (input-path day) input))
@@ -82,7 +82,7 @@
     (when (some? part2)
       (let [[input-time input] (load-or-download-input year day-num namespace)
             [solve-time solution] (time-ms part2 input)]
-        (println (format "Day %2d - Part 2:   " day-num) (color/green (str solution)))
+        (println "          Part 2:   " (color/green (str solution)))
         (println (str "         generator: " (fmt-ms input-time)))
         (println (str "         solution:  " (fmt-ms solve-time)))
         (println)))))
