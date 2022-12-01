@@ -1,4 +1,4 @@
-(defproject aoc-runner "0.1.0-SNAPSHOT"
+(defproject aoc-runner "0.1.0"
   :description "Command line runner for advent of code"
   :url "https://github.com/delta62/aoc-runner"
   :license {:name "MIT"
