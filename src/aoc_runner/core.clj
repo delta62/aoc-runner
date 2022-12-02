@@ -82,7 +82,7 @@
     (when (some? part2)
       (let [[input-time input] (load-or-download-input year day-num namespace)
             [solve-time solution] (time-ms part2 input)]
-        (println "          Part 2:   " (color/green (str solution)))
+        (println "         Part 2:   " (color/green (str solution)))
         (println (str "         generator: " (fmt-ms input-time)))
         (println (str "         solution:  " (fmt-ms solve-time)))
         (println)))))
