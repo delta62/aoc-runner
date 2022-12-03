@@ -20,6 +20,8 @@ argument, and should return the solution for the given day & part.
 You may optionally define a function named `parse`, which will be run before
 the solution functions. When `parse` is provided, it is passed the input string
 and its return value is passed to `part1` and `part2` instead of the raw input.
+If you need a different parser for parts 1 and 2, you can alternatively provide
+`parse-part1` and `parse-part2` functions.
 
 ### Downloading puzzle input
 

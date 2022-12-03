@@ -1,4 +1,4 @@
-(defproject org.clojars.delta62/aoc-runner "0.1.2"
+(defproject org.clojars.delta62/aoc-runner "0.2.0"
   :description "Command line runner for advent of code"
   :url "https://github.com/delta62/aoc-runner"
   :license {:name "MIT"

@@ -47,17 +47,26 @@
 (defn- have-input? [day]
   (.exists (io/file (input-path day))))
 
-(defn- load-input [day mod]
-  (let [parser (ns-resolve mod 'parse)
+(defn- load-parser [mod part]
+  (let [parse (ns-resolve mod 'parse)
+        part1-parse (ns-resolve mod 'parse-part1)
+        part2-parse (ns-resolve mod 'parse-part2)]
+    (cond
+      (some? parse) parse
+      (= 1 part) part1-parse
+      (= 2 part) part2-parse)))
+
+(defn- load-input [day part mod]
+  (let [parser (load-parser mod part)
         input (slurp (input-path day))]
     (if (some? parser)
       (time-ms parser input)
       [nil input])))
 
-(defn- load-or-download-input [year day mod]
+(defn- load-or-download-input [year day part mod]
   (when (not (have-input? day))
     (write-input day (download-input year day (load-session))))
-  (load-input day mod))
+  (load-input day part mod))
 
 (defn- latest-day [days]
   (last (sort-by day-number days)))
@@ -73,23 +82,25 @@
         part2 (ns-resolve namespace 'part2)
         day-num (day-number day)]
     (when (some? part1)
-      (let [[input-time input] (load-or-download-input year day-num namespace)
+      (let [[input-time input] (load-or-download-input year day-num 1 namespace)
             [solve-time solution] (time-ms part1 input)]
         (println (format "Day %2d - Part 1:   " day-num) (color/green (str solution)))
         (println (str "         generator: " (fmt-ms input-time)))
         (println (str "         solution:  " (fmt-ms solve-time)))
         (println)))
     (when (some? part2)
-      (let [[input-time input] (load-or-download-input year day-num namespace)
+      (let [[input-time input] (load-or-download-input year day-num 2 namespace)
             [solve-time solution] (time-ms part2 input)]
         (println "         Part 2:   " (color/green (str solution)))
         (println (str "         generator: " (fmt-ms input-time)))
         (println (str "         solution:  " (fmt-ms solve-time)))
         (println)))))
 
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn run-latest [year]
   (run-day year (latest-day (load-namespaces))))
 
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (defn run-all [year]
   (doseq [namespace (load-namespaces)]
     (run-day year namespace)))
